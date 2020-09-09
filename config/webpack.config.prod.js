@@ -3,6 +3,7 @@ const { merge } = require("webpack-merge");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const OptimizeCssPlugin = require("optimize-css-assets-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
 const smp = new SpeedMeasurePlugin();
 const commonConfig = require("./webpack.config.base");
@@ -10,6 +11,7 @@ const config = require("../public/config")["build"];
 
 const prodConfig = {
   mode: "production",
+  // devtool: "source-map",
   module: {
     rules: [
       {
@@ -38,7 +40,6 @@ const prodConfig = {
           },
           "less-loader",
         ],
-        exclude: /node_modules/,
       },
     ],
   },
@@ -61,5 +62,9 @@ const prodConfig = {
     new OptimizeCssPlugin(), // 压缩css
   ],
 };
+
+const Config =
+  process.env.ANALYZE === "1" &&
+  prodConfig.plugins.push(new BundleAnalyzerPlugin());
 
 module.exports = smp.wrap(merge(commonConfig, prodConfig));

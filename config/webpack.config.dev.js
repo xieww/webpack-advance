@@ -2,6 +2,8 @@ const { merge } = require("webpack-merge");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const webpack = require("webpack"); // 用于访问内置插件
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+const smp = new SpeedMeasurePlugin();
 const commonConfig = require("./webpack.config.base");
 const config = require("../public/config")["dev"];
 
@@ -24,7 +26,6 @@ const devConfig = {
           },
           "less-loader",
         ],
-        exclude: /node_modules/,
       },
     ],
   },
@@ -53,7 +54,7 @@ const devConfig = {
   devtool: "cheap-module-eval-source-map",
   devServer: {
     hot: true,
-    port: 8000, //默认是8080
+    port: 3000, //默认是8080
     open: true,
     quiet: false, //默认不启用
     inline: true, //默认开启 inline 模式，如果设置为false,开启 iframe 模式
@@ -75,4 +76,4 @@ const devConfig = {
   },
 };
 
-module.exports = merge(commonConfig, devConfig);
+module.exports = smp.wrap(merge(commonConfig, devConfig));

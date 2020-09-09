@@ -1,5 +1,8 @@
 import { printLog } from "utils/console";
+import {} from "./math";
 import "./index.less";
+
+square(1024);
 
 class Animal {
   constructor(name) {
