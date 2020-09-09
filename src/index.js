@@ -1,5 +1,5 @@
 import { printLog } from "utils/console";
-import {} from "./math";
+import { square } from "./math";
 import "./index.less";
 
 square(1024);

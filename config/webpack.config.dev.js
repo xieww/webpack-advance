@@ -2,8 +2,6 @@ const { merge } = require("webpack-merge");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const webpack = require("webpack"); // 用于访问内置插件
-const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
-const smp = new SpeedMeasurePlugin();
 const commonConfig = require("./webpack.config.base");
 const config = require("../public/config")["dev"];
 
@@ -76,4 +74,4 @@ const devConfig = {
   },
 };
 
-module.exports = smp.wrap(merge(commonConfig, devConfig));
+module.exports = merge(commonConfig, devConfig);
