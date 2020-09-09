@@ -1,14 +1,15 @@
 const path = require("path");
+const webpack = require("webpack");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-const webpack = require("webpack");
+const WebpackBar = require("webpackbar");
 
 module.exports = {
   entry: path.resolve("./src/index.js"),
   output: {
     path: path.resolve(__dirname, "../dist"), //必须是绝对路径
     filename: "[name].[hash:6].js",
-    publicPath: "/", //通常是CDN地址
+    // publicPath: "/", //通常是CDN地址
   },
   module: {
     rules: [
@@ -29,25 +30,6 @@ module.exports = {
           },
         },
         exclude: /node_modules/, //排除 node_modules 目录
-      },
-      {
-        test: /\.(le|c)ss$/,
-        use: [
-          "style-loader",
-          "css-loader",
-          {
-            loader: "postcss-loader",
-            options: {
-              postcssOptions: {
-                plugins: function () {
-                  return [require("autoprefixer")()];
-                },
-              },
-            },
-          },
-          "less-loader",
-        ],
-        exclude: /node_modules/,
       },
       {
         test: /\.(png|jpg|gif|jpeg|webp|svg|eot|ttf|woff|woff2)$/,
@@ -96,5 +78,13 @@ module.exports = {
       $: "jquery",
       React: "react",
     }),
+    new WebpackBar(),
   ],
+  resolve: {
+    modules: ["node_modules"],
+    alias: {
+      utils: path.resolve(__dirname, "../src/utils/"),
+    },
+    // extensions: ['.wasm', '.mjs', '.js', '.json'],
+  },
 };
